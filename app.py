@@ -241,20 +241,5 @@ elif section == "Prediction":
 
     except FileNotFoundError:
         st.error("No trained model found. Please train and save 'model.pkl' first.")
-import sqlite3
-import pandas as pd
-
-# Connect to database (creates if not exists)
-conn = sqlite3.connect("food_wastage.db")
-
-# Load CSVs into tables
-pd.read_csv("providers_data.csv").to_sql("Providers", conn, if_exists="replace", index=False)
-pd.read_csv("receivers_data.csv").to_sql("Receivers", conn, if_exists="replace", index=False)
-pd.read_csv("food_listings_data.csv").to_sql("Food_Listings", conn, if_exists="replace", index=False)
-pd.read_csv("claims_data.csv").to_sql("Claims", conn, if_exists="replace", index=False)
-
-conn.close()
-print("Database created and tables loaded!")
-
 
 
