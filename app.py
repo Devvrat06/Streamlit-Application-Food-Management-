@@ -5,6 +5,21 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pickle
 
+import sqlite3
+import pandas as pd
+
+# Connect to database (creates if not exists)
+conn = sqlite3.connect("food_wastage.db")
+
+# Load CSVs into tables
+pd.read_csv("Providers.csv").to_sql("Providers", conn, if_exists="replace", index=False)
+pd.read_csv("Receivers.csv").to_sql("Receivers", conn, if_exists="replace", index=False)
+pd.read_csv("Food_Listings.csv").to_sql("Food_Listings", conn, if_exists="replace", index=False)
+pd.read_csv("Claims.csv").to_sql("Claims", conn, if_exists="replace", index=False)
+
+conn.close()
+print("Database created and tables loaded!")
+
 # ================= PAGE CONFIG ================= #
 st.set_page_config(page_title="Food Wastage EDA & Prediction", layout="wide")
 st.title("📊 Food Wastage Analysis & Prediction App")
@@ -241,19 +256,4 @@ elif section == "Prediction":
 
     except FileNotFoundError:
         st.error("No trained model found. Please train and save 'model.pkl' first.")
-
-import sqlite3
-import pandas as pd
-
-# Connect to database (creates if not exists)
-conn = sqlite3.connect("food_wastage.db")
-
-# Load CSVs into tables
-pd.read_csv("Providers.csv").to_sql("Providers", conn, if_exists="replace", index=False)
-pd.read_csv("Receivers.csv").to_sql("Receivers", conn, if_exists="replace", index=False)
-pd.read_csv("Food_Listings.csv").to_sql("Food_Listings", conn, if_exists="replace", index=False)
-pd.read_csv("Claims.csv").to_sql("Claims", conn, if_exists="replace", index=False)
-
-conn.close()
-print("Database created and tables loaded!")
 
