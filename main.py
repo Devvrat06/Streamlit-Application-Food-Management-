@@ -241,3 +241,5 @@ elif section == "Prediction":
 
     except FileNotFoundError:
         st.error("No trained model found. Please train and save 'model.pkl' first.")
+
+!streamlit run main.py
